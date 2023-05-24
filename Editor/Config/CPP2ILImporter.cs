@@ -28,6 +28,7 @@ namespace ThunderKit.CPP2ILImport.Config
         public bool parallel;
         public bool throwSafetyOutWindow;
         public bool suppressAttributes = true;
+        public bool simpleAttributes;
         public bool disableAutoSetup;
 
         private SerializedObject serializedObject;
@@ -180,6 +181,7 @@ namespace ThunderKit.CPP2ILImport.Config
                 (attemptILToDLL ? "--experimental-enable-il-to-assembly-please" : ""),
                 (parallel ? "--parallel" : ""),
                 (throwSafetyOutWindow ? "--throw-safety-out-the-window" : ""),
+                (simpleAttributes ? "--simple-attribute-restoration" : ""),
                 (suppressAttributes ? "--suppress-attributes" : ""),
                 "--skip-method-dumps",
                 "--skip-metadata-txts",
@@ -336,6 +338,7 @@ namespace ThunderKit.CPP2ILImport.Config
             var pParallel = serializedObject.FindProperty(nameof(parallel));
             var pThrowSafetyOutWindow = serializedObject.FindProperty(nameof(throwSafetyOutWindow));
             var pSuppressMetaDataAttributes = serializedObject.FindProperty(nameof(suppressAttributes));
+            var pSimpleAttributes = serializedObject.FindProperty(nameof(simpleAttributes));
             var pDisableAutoSetup = serializedObject.FindProperty(nameof(disableAutoSetup));
 
             var fCpp2ilExe = new PropertyField(pCpp2ilExe, "Cpp2IL.exe");
@@ -343,6 +346,7 @@ namespace ThunderKit.CPP2ILImport.Config
             var fThrowSafetyOutWindow = new PropertyField(pThrowSafetyOutWindow, "Throw safety out the window");
             var fParallel = new PropertyField(pParallel, "Process .dll's simultaneously");
             var fSuppressMetaDataAttributes = new PropertyField(pSuppressMetaDataAttributes, "Suppress Metadata Attributes");
+            var fSimpleAttributes = new PropertyField(pSimpleAttributes, "Simple Attribute Restoration");
             var fDisableAutoSetup = new PropertyField(pDisableAutoSetup, "Disable Auto-Setup of Import Configuration (Not Recommended)");
 
             if (pCpp2ilExe.objectReferenceValue == null)
@@ -367,6 +371,7 @@ namespace ThunderKit.CPP2ILImport.Config
             fThrowSafetyOutWindow.RegisterValueChangeCallback(callback);
             fParallel.RegisterValueChangeCallback(callback);
             fSuppressMetaDataAttributes.RegisterValueChangeCallback(callback);
+            fSimpleAttributes.RegisterValueChangeCallback(callback);
             fDisableAutoSetup.RegisterValueChangeCallback(callback);
 
             rootVisualElement.Add(fCpp2ilExe);
@@ -374,6 +379,7 @@ namespace ThunderKit.CPP2ILImport.Config
             rootVisualElement.Add(fThrowSafetyOutWindow);
             rootVisualElement.Add(fParallel);
             rootVisualElement.Add(fSuppressMetaDataAttributes);
+            rootVisualElement.Add(fSimpleAttributes);
             rootVisualElement.Add(fDisableAutoSetup);
 
             return rootVisualElement;
