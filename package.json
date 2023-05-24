@@ -1,0 +1,16 @@
+{
+  "name": "com.kevinfromhp.thunderkit.cpp2ilimport",
+  "version": "1.0.0",
+  "displayName": "ThunderKit.CPP2ILImport",
+  "description": "A ThunderKit Extension that allows for the importing of games that are built with IL2CPP. Note that these files should not be used as references for mod assemblies.",
+  "unity": "2018.4",
+  "release": "12f1",
+  "author": {
+    "name": "ThunderKit",
+    "url": "https://github.com/PassivePicasso/ThunderKit"
+  },
+  "dependencies": {
+    "com.passivepicasso.thunderkit": "8.0.0",
+    "com.unity.scriptablebuildpipeline": "1.16.1"
+  }
+}

@@ -1,0 +1,27 @@
+{
+    "name": "ThunderKit.CPP2ILImport",
+    "rootNamespace": "",
+    "references": [
+        "ThunderKit.Common",
+        "ThunderKit.Core",
+        "ThunderKit.Markdown",
+        "ToolbarExtender.Editor",
+        "BsDiff",
+        "Assets"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "SharpCompress.dll",
+        "Markdig.Signed.dll",
+        "AssetsTools.NET.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
