@@ -12,5 +12,6 @@
   "dependencies": {
     "com.passivepicasso.thunderkit": "8.0.0",
     "com.unity.scriptablebuildpipeline": "1.16.1"
-  }
+  },
+  "type": "tool"
 }

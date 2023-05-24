@@ -123,16 +123,16 @@ namespace ThunderKit.CPP2ILImport.Config
 
 
         #region CPP2IL
-        private bool TryFindCPP2ILExecutable(out UnityEngine.Object cpp2ilExecutable)
+        private bool TryFindCPP2ILExecutable(out Object cpp2ilExecutable)
         {
-            cpp2ilExecutable = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(Constants.CPP2ILExePath);
+            cpp2ilExecutable = AssetDatabase.LoadAssetAtPath<Object>(Constants.CPP2ILExePath);
             if (!cpp2ilExecutable)
             {
-                var nstripPath = AssetDatabase.FindAssets("")
-                             .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
-                             .FirstOrDefault(path => path.EndsWith("CPP2IL.exe"));
+                var cpp2ILPath = AssetDatabase.FindAssets("")
+                                              .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
+                                              .FirstOrDefault(path => path.EndsWith("Cpp2IL.exe"));
 
-                cpp2ilExecutable = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(nstripPath);
+                cpp2ilExecutable = AssetDatabase.LoadAssetAtPath<Object>(cpp2ILPath);
             }
 
             return cpp2ilExecutable;
@@ -149,7 +149,6 @@ namespace ThunderKit.CPP2ILImport.Config
                 }
                 return;
             }
-
             var relativePath = AssetDatabase.GetAssetPath(cpp2il);
             var fullPath = Path.GetFullPath(relativePath);
             var fileName = Path.GetFileName(fullPath);
@@ -157,7 +156,7 @@ namespace ThunderKit.CPP2ILImport.Config
 
             if (fileName != "Cpp2IL.exe")
             {
-                MessageElement.Data = $"Object in \"N Strip Executable\" is not NStrip!";
+                MessageElement.Data = $"Object in \"Cpp2IL.exe\" is not Cpp2IL!";
                 if (!rootVisualElement.Contains(MessageElement))
                 {
                     rootVisualElement.Add(MessageElement);
@@ -236,7 +235,7 @@ namespace ThunderKit.CPP2ILImport.Config
                 }
                 catch
                 {
-                    Debug.LogWarning($"Could not update assembly: {destinationFile}", AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(destinationFile));
+                    Debug.LogWarning($"Could not update assembly: {destinationFile}", AssetDatabase.LoadAssetAtPath<Object>(destinationFile));
                 }
             }
         }
@@ -345,6 +344,21 @@ namespace ThunderKit.CPP2ILImport.Config
             var fParallel = new PropertyField(pParallel, "Process .dll's simultaneously");
             var fSuppressMetaDataAttributes = new PropertyField(pSuppressMetaDataAttributes, "Suppress Metadata Attributes");
             var fDisableAutoSetup = new PropertyField(pDisableAutoSetup, "Disable Auto-Setup of Import Configuration (Not Recommended)");
+
+            if (pCpp2ilExe.objectReferenceValue == null)
+            {
+                if (TryFindCPP2ILExecutable(out var executable))
+                {
+                    pCpp2ilExe.objectReferenceValue = executable;
+                    serializedObject.ApplyModifiedProperties();
+                }
+                else
+                {
+                    MessageElement.Data = $"***__WARNING__***: Could not find Cpp2IL.exe!";
+                    rootVisualElement.Add(MessageElement);
+                }
+            }
+
 
             var callback = new EventCallback<SerializedPropertyChangeEvent>(spce => spce.changedProperty.serializedObject.ApplyModifiedProperties());
 
