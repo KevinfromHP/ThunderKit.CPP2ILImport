@@ -47,7 +47,7 @@ namespace ThunderKit.CPP2ILImport.Config
         public static void DisableImportAssemblies()
         {
             var settings = ThunderKitSetting.GetOrCreateSettings<ThunderKitSettings>();
-            var executors = settings.ImportConfiguration.ConfigurationExecutors;
+            var executors = ThunderKitSetting.GetOrCreateSettings<ImportConfiguration>().ConfigurationExecutors;
 
             var importer = executors.OfType<CPP2ILImporter>().FirstOrDefault();
             if (!importer || !importer.enabled || importer.disableAutoSetup || string.IsNullOrWhiteSpace(settings.GamePath))
